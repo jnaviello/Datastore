@@ -1,5 +1,6 @@
 import cgi
 import urllib
+import
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -33,7 +34,7 @@ class Post(ndb.Model):
   date = ndb.DateTimeProperty(auto_now_add=True)
 
 
-class MainPage(webapp2.RequestHandler):
+class MainPage(Handler):
   def get(self):
     comment_name = self.request.get('comment_name',DEFAULT_COMMENT_NAME)
     if wall_name == DEFAULT_WALL.lower(): wall_name = DEFAULT_WALL
