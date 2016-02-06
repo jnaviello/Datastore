@@ -9,23 +9,17 @@ import webapp2
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-DEFAULT_WALL = 'Public'
+DEFAULT_COMMENT_NAME = 'default_comment'
 
-# We set a parent key on the 'Post' to ensure that they are all
-# in the same entity group. Queries across the single entity group
-# will be consistent.  However, the write rate should be limited to
-# ~1/second.
 
-def wall_key(wall_name=DEFAULT_WALL):
-  """Constructs a Datastore key for a Wall entity.
+def comment_key(comment_name=DEFAULT_COMMENT_NAME):
+  """Constructs a Datastore key for a comment entity.
 
-  We use wall_name as the key.
+  We use comment_name as the key.
   """
-  return ndb.Key('Wall', wall_name)
+  return ndb.Key('Comment', comment_name)
 
-# These are the objects that will represent our Author and our Post. We're using
-# Object Oriented Programming to create objects in order to put them in Google's
-# Database. These objects inherit Googles ndb.Model class.
+
 class Author(ndb.Model):
   """Sub model for representing an author."""
   identity = ndb.StringProperty(indexed=True)
@@ -41,24 +35,14 @@ class Post(ndb.Model):
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
-    wall_name = self.request.get('wall_name',DEFAULT_WALL)
+    comment_name = self.request.get('comment_name',DEFAULT_COMMENT_NAME)
     if wall_name == DEFAULT_WALL.lower(): wall_name = DEFAULT_WALL
 
-    # Ancestor Queries, as shown here, are strongly consistent
-    # with the High Replication Datastore. Queries that span
-    # entity groups are eventually consistent. If we omitted the
-    # ancestor from this query there would be a slight chance that
-    # Greeting that had just been written would not show up in a
-    # query.
-
-    # [START query]
-    posts_query = Post.query(ancestor = wall_key(wall_name)).order(-Post.date)
-
-    # The function fetch() returns all posts that satisfy our query. The function returns a list of
-    # post objects
+     # [START query]
+    comment_query = Comment.query(ancestor = comment_key(comment_name)).order(-Post.date)
+  
     posts =  posts_query.fetch()
-    # [END query]
-
+    
     # If a person is logged into Google's Services
     user = users.get_current_user()
     if user:
@@ -85,10 +69,10 @@ class MainPage(webapp2.RequestHandler):
       posts_html += 'wrote: <blockquote>' + cgi.escape(post.content) + '</blockquote>\n'
       posts_html += '</div>\n'
 
-    sign_query_params = urllib.urlencode({'wall_name': wall_name})
+    sign_query_params = urllib.urlencode({'comment_name': comment_name})
 
     # Render our page
-    rendered_HTML = HTML_TEMPLATE % (sign_query_params, cgi.escape(wall_name), user_name,
+    rendered_HTML = HTML_TEMPLATE % (sign_query_params, cgi.escape(comment_name), user_name,
                                     url, url_linktext, posts_html)
 
     # Write Out Page here
