@@ -6,30 +6,8 @@ from google.appengine.ext import ndb
 
 import webapp2
 
-# We're going to use string substitution to render our HTML
-HTML_TEMPLATE = """<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>Wall Book Example</title>
-</head>
-<body>
-  <form action="/sign?%s" method="post">
-    <div><textarea name="content" rows="3" cols="60"></textarea></div>
-    <div><input type="submit" value="Post Comment"></div>
-  </form>
-  <hr>
-  <form>Wall:
-    <input value="%s" name="wall_name">
-    <input type="submit" value="Switch">
-  </form>
-  <br>
-  Logged in as: <strong>%s</strong><br>
-  <a href="%s">%s</a>
-  <!-- user comments start here -->
-  %s
-</body>
-</html>
-"""
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
 DEFAULT_WALL = 'Public'
 
