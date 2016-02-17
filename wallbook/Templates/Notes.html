@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="lesson">
+    <h2>
+        Lesson 1: Understanding Networks
+    </h2>
+
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Networks</h3>
+        </div>
+        <div class="concept-description">
+            <p>
+                A group of entities that can communicate even though they are not directly connected.
+                There has to be at least three entities and there has to be a way that entities that are not directly
+                connected can still communicate.
+            </p>
+
+            <p>
+                <a href="https://www.udacity.com/course/viewer#!/c-nd000/l-4212668559/e-48011978/m-48692661">
+                This Video</a> does a good job of explaining it.
+            </p>
+        </div>
+    </div>
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Latency</h3>
+        </div>
+        <div class="concept-description">
+            <p>
+                Latency or <em>the time that it takes the message to get from the source to the destination.</em> We can
+                measure latency from the time that you start sending data to the time that the receiver starts receiving
+                it.
+            </p>
+
+            <p>
+                <a href="https://www.udacity.com/course/viewer#!/c-nd000/l-4212668559/e-48737168/m-48729193">
+                This Video</a> gives an overview.
+            </p>
+        </div>
+    </div>
+    <div class="concept">
+            <div class="concept-title">
+                <h3>Bandwidth</h3>
+            </div>
+            <div class="concept-description">
+                <p>
+                    Bandwidth is the bit-rate of available or consumed information capacity expressed typically in
+                    metric multiples of bits per second or <b>bps</b>
+                </p>
+
+                <p>
+                    <a href="https://www.udacity.com/course/viewer#!/c-nd000/l-4212668559/m-48739102">
+                    This Video</a> gives more detail.
+                </p>
+
+            </div>
+    </div>
+</div>
+
+<div class="lesson">
+    <h2>
+        Lesson 2: Importance Of Validating Input
+    </h2>
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Checking Validation</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    A website is similar to a house. HTML files are like
+                    the structure. CSS files are the style of the house.
+                </p>
+
+                <p>
+                    Javascript files are interactive components. There
+                    are rules for how websites behave. There are certain
+                    tools used to ensure websites follow these rules.
+                </p>
+            </div>
+    </div>
+
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Handling Bad Data</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    HTML documents follow a tree like structure. There are elements like
+                    <em>div</em>,<em>span</em>,
+                    <em>h1</em>, <em>h2</em> etc. which allow programmers to navigate the <b>DOM</b> or document
+                    object model. Each one of these elements act like a <em>branch</em> of the tree and follow a
+                    parent-child like relationship. As you click on each element you can traverse through the individual
+                    branches or from parent to children.
+                <p>
+                    When a programmer talks about DOM they are talking
+                    about the tree like structure of a page. <a
+                    href="https://www.udacity.com/course/viewer#!/c-nd000/l-4137489485/e-2771378561/m-2771378562">This
+                    lesson</a> covers this topic in detail.
+                </p>
+            </div>
+    </div>
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Using Boxes to Organize your Web Page</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    Everything on the web is boxes. It is best to start
+                    with the big box or the whole page then break down
+                    the page into smaller boxes.
+                </p>
+            </div>
+    </div>
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Tools Programmers Use</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    A text editor is a program that helps you type text
+                    similar to document editors, such as Microsoft Word
+                    or Word Perfect, but without all the extra formatting
+                    functions that document editors have.
+                </p>
+            </div>
+    </div>
+</div>
+<div class="lesson">
+    <h2>
+        Lesson 3: HTML Templates
+    </h2>
+
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Introducing Templates</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    Avoiding repetition is necessary when programming.
+                    You want to avoid having to rewrite the same code
+                    multiple times.
+                </p>
+
+                <p>
+                    Creating classes helps avoid repetition, because you
+                    can add style to a single class and it will make
+                    changes to several parts of your code. This saves the
+                    programmer time and helps avoid making mistakes.
+                </p>
+            </div>
+    </div>
+
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Variable Substitution</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    You can add images to your design by making an images
+                    folder inside your project folder.
+                </p>
+
+                <p>
+                    Make sure the image name does not contain any spaces or
+                    accented characters. You can add the image to your page
+                    with the img tag and providing the source of the image.
+                </p>
+            </div>
+    </div>
+
+
+    <div class="concept">
+        <div class="concept-title">
+            <h3>Template Inheritance</h3>
+        </div>
+            <div class="concept-description">
+                <p>
+                    Code test and refine is the best way to complete a web
+                    page. First you need to get the structre of the page
+                    right by boxifying the design. Then work on the tags
+                    headings etc. Once the design looks right you can
+                    beging to work on the finer details.
+                </p>
+            </div>
+    </div>
+</div>
+
+<div>
+    {% for greeting in greetings %}
+      {% if greeting.author %}
+        <b>{{ greeting.author.email }}
+            </b> wrote:
+          {% if user and user.user_id() == greeting.author.identity %}
+            (You)
+      {% endif %}
+      {% else %}
+       An anonymous person wrote:
+      <blockquote>{{ greeting.content }} {{ greeting.date }}</blockquote>
+    {% endif %}
+    {% if error %}
+    {{error|safe}}
+    {% endif %}
+    {% endfor %}
+    <hr>
+    <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Leave a Comment"></div>
+    </form>
+    <hr>
+    <form>Guestbook name:
+      <input value="{{ guestbook_name }}" name="guestbook_name">
+      <input type="submit" value="switch">
+    </form>
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+</div>
+{% endblock %}
