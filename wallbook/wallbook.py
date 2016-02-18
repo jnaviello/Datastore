@@ -13,6 +13,9 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), aut
 
 DEFAULT_WALL = 'Public'
 
+#global variable error is set to False
+error = False
+
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -30,11 +33,12 @@ def guestbook_key(guestbook_name=DEFAULT_WALL):
 
 class Author(ndb.Model):
     identity = ndb.StringProperty(indexed=False)
+    name = ndb.StringProperty(indexed=False)
     email = ndb.StringProperty(indexed=False)
 
-class Greeting(ndb.Model):
-    name = ndb.StringProperty()
-    comment = ndb.StringProperty(indexed=True)
+class Post(ndb.Model):
+    author = ndb.StructuredProperty(Author)
+    content = ndb.StringProperty(indexed=True)
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
@@ -42,11 +46,10 @@ class Greeting(ndb.Model):
 class MainPage(Handler):
     def get(self):
         guestbook_name = self.request.get('guestbook_name', DEFAULT_WALL)
-        max_posts=20
-        error= self.request.get('error', "")
+        max_posts=10
         # [START query]
-        greetings_query = Greeting.query(ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
-        greetings = greetings_query.fetch(max_posts)
+        post_query = Post.query(ancestor=guestbook_key(guestbook_name)).order(-Post.date)
+        post = post_query.fetch(max_posts)
         # Check if a person is logged into Google's Services
         user = users.get_current_user()
         if user:
@@ -60,7 +63,7 @@ class MainPage(Handler):
 
         template_values = {
             'user': user,
-            'greetings': greetings,
+            'post': post,
             'guestbook_name': urllib.quote_plus(guestbook_name),
             'url': url,
             'url_linktext': url_linktext,
@@ -71,24 +74,37 @@ class MainPage(Handler):
         self.response.write(template.render(template_values))
 
 
-class Guestbook(Handler):
+class Guestbook(webapp2.RequestHandler):
     def post(self):
+#I am declaring the variable error as global
+        global error
+        time_to_sleep = .1
         guestbook_name = self.request.get('guestbook_name', DEFAULT_WALL).strip()
-        greeting = Greeting(parent=guestbook_key(guestbook_name))
+        post = Post(parent=guestbook_key(guestbook_name))
+
+        post.content = self.request.get('content')
+
         if users.get_current_user():
-            greeting.author = Author(identity=users.get_current_users().user_id(),email=users.get_current_user().email)
-        greeting.content = self.request.get('content')
-        greeting.content.strip()
-        if greeting.content == '':
-            error = "I'm sorry that's not a valid comment!"
-            self.redirect('/?' + error)
+            post.author = Author(identity=users.get_current_users().user_id(),
+                                 name=users.get_current_user().nickname(),
+                                 email=users.get_current_user().email)
         else:
-            greeting.put()
-            query_params = {'guestbook_name':guestbook_name}
-            self.redirect('/?'+ urllib.urlencode(query_params))
+            post.author = Author(name='anonymous@anonymous.com',
+                                 email='anonymous@anonymous.com')
 
+# I am using the isspace() method to check if the comment is blank and assigning the global variable error to True
+# or False depending on the condition
+        if post.content and(not post.content.isspace()):
+            error = False
+            post.put()
+        else:
+            error = True
+            self.redirect('/?Notes.html')
 
-app = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/sign', Guestbook),
-    ], debug=True)
+        time.sleep(time_to_sleep)
+        query_params = {'guestbook_name': guestbook_name, 'error':error}
+        self.redirect('/?' + urllib.urlencode(query_params))
+
+app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/sign', Guestbook),
+                               ], debug=True)

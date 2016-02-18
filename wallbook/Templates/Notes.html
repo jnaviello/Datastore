@@ -26,34 +26,28 @@
     </div>
     <div class="concept">
         <div class="concept-title">
-            <h3>Latency</h3>
+            <h3>Servers</h3>
         </div>
         <div class="concept-description">
             <p>
-                Latency or <em>the time that it takes the message to get from the source to the destination.</em> We can
-                measure latency from the time that you start sending data to the time that the receiver starts receiving
-                it.
-            </p>
-
-            <p>
-                <a href="https://www.udacity.com/course/viewer#!/c-nd000/l-4212668559/e-48737168/m-48729193">
-                This Video</a> gives an overview.
+                A server is a computer that interacts with a request we make to the computer. For example, whenever we type in "http://www.google.com", 
+				we are sending a request to Google's servers to return a website.
             </p>
         </div>
     </div>
     <div class="concept">
             <div class="concept-title">
-                <h3>Bandwidth</h3>
+                <h3>Get vs Post</h3>
             </div>
             <div class="concept-description">
                 <p>
-                    Bandwidth is the bit-rate of available or consumed information capacity expressed typically in
-                    metric multiples of bits per second or <b>bps</b>
+                   Get parameters are included in the URL.  Get requests are used for fetching documents.  Get parameters have a 
+				   max URL length. Get parameters are generally ok to cache.  Get parameters should not change the server
                 </p>
 
                 <p>
-                    <a href="https://www.udacity.com/course/viewer#!/c-nd000/l-4212668559/m-48739102">
-                    This Video</a> gives more detail.
+                    Post parameters are included in the body.  Post parameters are used for updating data or actually making changes.
+					Post parameters have no max length.  Post parameters are almost never cached.  post requests are usually destructive in nature.  
                 </p>
 
             </div>
@@ -70,14 +64,13 @@
         </div>
             <div class="concept-description">
                 <p>
-                    A website is similar to a house. HTML files are like
-                    the structure. CSS files are the style of the house.
+                    Web applications are vulnerable if you don't practice input validation.
+                    Validation is one of the simplest ways to check if a page is built in accordance with web
+                    standards, and provides on of the most reliable ways to ensure your page is safe and reliable.
                 </p>
 
                 <p>
-                    Javascript files are interactive components. There
-                    are rules for how websites behave. There are certain
-                    tools used to ensure websites follow these rules.
+                    <a href="https://validator.w3.org/docs/why.html">This website</a> does a great job of explaining.
                 </p>
             </div>
     </div>
@@ -88,46 +81,17 @@
         </div>
             <div class="concept-description">
                 <p>
-                    HTML documents follow a tree like structure. There are elements like
-                    <em>div</em>,<em>span</em>,
-                    <em>h1</em>, <em>h2</em> etc. which allow programmers to navigate the <b>DOM</b> or document
-                    object model. Each one of these elements act like a <em>branch</em> of the tree and follow a
-                    parent-child like relationship. As you click on each element you can traverse through the individual
-                    branches or from parent to children.
+                    We need to verify what the user enters and confirm if the data is bad.  Using something like
+                    a drop-down is not enough to ensure that the user is not passing bad data to our form.
+                </p>
+
                 <p>
-                    When a programmer talks about DOM they are talking
-                    about the tree like structure of a page. <a
-                    href="https://www.udacity.com/course/viewer#!/c-nd000/l-4137489485/e-2771378561/m-2771378562">This
+                    <a href="https://www.udacity.com/course/viewer#!/c-ud750-nd/l-6830699716/e-48751053/m-48665950">This
                     lesson</a> covers this topic in detail.
                 </p>
             </div>
     </div>
-    <div class="concept">
-        <div class="concept-title">
-            <h3>Using Boxes to Organize your Web Page</h3>
-        </div>
-            <div class="concept-description">
-                <p>
-                    Everything on the web is boxes. It is best to start
-                    with the big box or the whole page then break down
-                    the page into smaller boxes.
-                </p>
-            </div>
-    </div>
-    <div class="concept">
-        <div class="concept-title">
-            <h3>Tools Programmers Use</h3>
-        </div>
-            <div class="concept-description">
-                <p>
-                    A text editor is a program that helps you type text
-                    similar to document editors, such as Microsoft Word
-                    or Word Perfect, but without all the extra formatting
-                    functions that document editors have.
-                </p>
-            </div>
-    </div>
-</div>
+
 <div class="lesson">
     <h2>
         Lesson 3: HTML Templates
@@ -139,16 +103,10 @@
         </div>
             <div class="concept-description">
                 <p>
-                    Avoiding repetition is necessary when programming.
+                    Templates refer to a library used to build complicated strings (html).  Jinja2 is a template
+                    library that was used to make this web page.  Avoiding repetition is necessary when programming.
                     You want to avoid having to rewrite the same code
                     multiple times.
-                </p>
-
-                <p>
-                    Creating classes helps avoid repetition, because you
-                    can add style to a single class and it will make
-                    changes to several parts of your code. This saves the
-                    programmer time and helps avoid making mistakes.
                 </p>
             </div>
     </div>
@@ -159,18 +117,12 @@
         </div>
             <div class="concept-description">
                 <p>
-                    You can add images to your design by making an images
-                    folder inside your project folder.
-                </p>
-
-                <p>
-                    Make sure the image name does not contain any spaces or
-                    accented characters. You can add the image to your page
-                    with the img tag and providing the source of the image.
+                    The syntax for substituting a variable in Jinja is a double curly brace.
+                    Substitution is basically just printing the variable.  This is a handy way to substitute a
+                    string while maintaining cleaner code.
                 </p>
             </div>
     </div>
-
 
     <div class="concept">
         <div class="concept-title">
@@ -178,42 +130,42 @@
         </div>
             <div class="concept-description">
                 <p>
-                    Code test and refine is the best way to complete a web
-                    page. First you need to get the structre of the page
-                    right by boxifying the design. Then work on the tags
-                    headings etc. Once the design looks right you can
-                    beging to work on the finer details.
+                    This is a great way to avoid repetition and makes your code more organized and easier to read.
+                    This lets you define a base template which you can later plug new HTML into. This is useful when,
+                    for example, you want to have a consistent header and footer across your app.  Remember better
+                    organized code is more readable,easier to fix, easier to share, and harder to break.
                 </p>
             </div>
     </div>
 </div>
 
-<div>
-    {% for greeting in greetings %}
-      {% if greeting.author %}
-        <b>{{ greeting.author.email }}
-            </b> wrote:
-          {% if user and user.user_id() == greeting.author.identity %}
-            (You)
-      {% endif %}
-      {% else %}
-       An anonymous person wrote:
-      <blockquote>{{ greeting.content }} {{ greeting.date }}</blockquote>
+
+<form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+    <div><textarea name="content" rows="3" cols="60"></textarea></div>
+    <div><input type="submit" value="Leave a Comment"></div>
+</form>
+{% if error %}
+Please fill out a comment!
+{% endif %}
+<hr>
+<br>
+<a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+<br>
+{% for post in post %}
+{% if post.author %}
+<b>{{ post.author.email }}
+    {% if user and user.user_id() == post.author.identity %}
+    (You)
     {% endif %}
-    {% if error %}
-    {{error|safe}}
-    {% endif %}
-    {% endfor %}
-    <hr>
-    <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Leave a Comment"></div>
-    </form>
-    <hr>
-    <form>Guestbook name:
-      <input value="{{ guestbook_name }}" name="guestbook_name">
-      <input type="submit" value="switch">
-    </form>
-    <a href="{{ url|safe }}">{{ url_linktext }}</a>
-</div>
+</b> wrote:
+    {% else %}
+    An anonymous person wrote:
+{% endif %}
+<blockquote>
+    {{ post.content }} {{ post.date }}
+</blockquote>
+{% endfor %}
+
+
 {% endblock %}
